@@ -1,0 +1,373 @@
+{%- liquid
+  assign section_id = 'PurelaneShop-' | append: section.id
+  assign collection = section.settings.collection
+-%}
+
+<section
+  id="{{ section_id }}"
+  class="purelane-shop sec"
+  data-scene="3"
+  style="
+    --purelane-shop-bg: {{ section.settings.background_color }};
+    --purelane-shop-text: {{ section.settings.text_color }};
+  "
+>
+  <div class="wrap">
+    <div class="panel-head">
+      {%- if section.settings.kicker != blank -%}
+        <span class="kicker">{{ section.settings.kicker | escape }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="d2" style="margin-top:12px">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      <div class="rule" aria-hidden="true">
+        <i></i>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z"/><path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z"/>
+        </svg>
+        <i></i>
+      </div>
+      {%- if section.settings.subheading != blank -%}
+        <p class="lede" style="margin:14px auto 0">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="shelf">
+      {%- if section.settings.product_list != blank -%}
+        {%- for product in section.settings.product_list limit: section.settings.products_to_show -%}
+          {%- render 'purelane-product-card', product: product, show_rating: section.settings.show_rating -%}
+        {%- endfor -%}
+      {%- elsif collection != blank and collection.products_count > 0 -%}
+        {%- for product in collection.products limit: section.settings.products_to_show -%}
+          {%- render 'purelane-product-card', product: product, show_rating: section.settings.show_rating -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- comment -%} Fallback placeholder cards when no products are selected yet {%- endcomment -%}
+        {%- for i in (1..4) -%}
+          <article class="glass card">
+            <div class="shot">
+              <span class="pill">Popular</span>
+              <div class="purelane-placeholder-box" role="img" aria-label="Product preview">
+                {{ 'product-' | append: i | placeholder_svg_tag: 'purelane-placeholder-svg' }}
+              </div>
+            </div>
+            <h4 class="product-card-title">Purelane Plant Cleaner {{ i }}</h4>
+            <div class="rate"><b>★ 4.8</b> · 200+ reviews</div>
+            <div class="pr"><strong>₹200</strong><s>₹299</s><em>33% off</em></div>
+            <button type="button" class="btn btn-ghost btn-sm" disabled>Add to cart</button>
+          </article>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  #{{ section_id }} {
+    position: relative;
+    padding: var(--sec-y, 34px) 0;
+  }
+  #{{ section_id }} .wrap {
+    max-width: var(--maxw, 1180px);
+    margin: 0 auto;
+    padding: 0 18px;
+  }
+  #{{ section_id }} .panel-head {
+    text-align: center;
+    margin-bottom: 26px;
+  }
+  #{{ section_id }} .kicker {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: rgba(36,26,61,.56);
+  }
+  #{{ section_id }} .d2 {
+    font-family: 'Outfit', system-ui, sans-serif;
+    font-size: clamp(30px, 4.6vw, 54px);
+    line-height: .94;
+    text-transform: uppercase;
+    letter-spacing: -.018em;
+    font-weight: 800;
+    color: #17102b;
+    margin: 0;
+  }
+  #{{ section_id }} .rule {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin: 14px auto 0;
+    justify-content: center;
+    max-width: 240px;
+    color: #b8701c;
+  }
+  #{{ section_id }} .rule i {
+    height: 1px;
+    flex: 1;
+    background: linear-gradient(90deg, rgba(75,58,143,.34), transparent);
+  }
+  #{{ section_id }} .rule i:first-child {
+    background: linear-gradient(90deg, transparent, rgba(75,58,143,.34));
+  }
+  #{{ section_id }} .rule svg {
+    width: 16px;
+    height: 16px;
+    flex: 0 0 auto;
+  }
+  #{{ section_id }} .lede {
+    font-size: clamp(15px, 1.35vw, 17.5px);
+    color: rgba(36,26,61,.78);
+    max-width: 44ch;
+    line-height: 1.62;
+  }
+  #{{ section_id }} .shelf {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (min-width: 860px) {
+    #{{ section_id }} .shelf {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  #{{ section_id }} .card {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 26px;
+    background: linear-gradient(158deg, rgba(255,255,255,.80), rgba(236,230,247,.56) 58%, rgba(222,212,240,.50));
+    backdrop-filter: blur(24px) saturate(150%);
+    -webkit-backdrop-filter: blur(24px) saturate(150%);
+    border: 1px solid rgba(75,58,143,.16);
+    box-shadow: 0 22px 54px rgba(58,44,112,.13), inset 0 1px 0 rgba(255,255,255,.92);
+    position: relative;
+    overflow: hidden;
+    transition: transform .4s cubic-bezier(.2,.7,.2,1), box-shadow .4s ease;
+  }
+  #{{ section_id }} .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 28px 60px rgba(58,44,112,.2), inset 0 1px 0 rgba(255,255,255,.95);
+  }
+  #{{ section_id }} .card.is-sold-out {
+    opacity: 0.85;
+  }
+  #{{ section_id }} .shot {
+    height: 160px;
+    border-radius: 16px;
+    margin-bottom: 14px;
+    display: grid;
+    place-items: center;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, rgba(255,255,255,.60), rgba(236,230,247,.42));
+    border: 1px solid rgba(75,58,143,.10);
+  }
+  #{{ section_id }} .shot img {
+    height: 130px;
+    width: auto;
+    max-width: 85%;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 13px rgba(0,74,66,.13));
+    transition: transform .35s ease;
+  }
+  #{{ section_id }} .card:hover .shot img {
+    transform: scale(1.05);
+  }
+  #{{ section_id }} .purelane-placeholder-box {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    color: rgba(75,58,143,.35);
+  }
+  #{{ section_id }} .purelane-placeholder-svg {
+    width: 65%;
+    height: 65%;
+  }
+  #{{ section_id }} .pill {
+    position: absolute;
+    top: 9px;
+    left: 9px;
+    font-size: 8.5px;
+    font-weight: 800;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    padding: 4px 9px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.86);
+    border: 1px solid rgba(201,118,29,.34);
+    color: #4f7d10;
+    z-index: 2;
+  }
+  #{{ section_id }} .pill--sold-out {
+    background: rgba(23,16,43,.85);
+    border-color: rgba(23,16,43,.9);
+    color: #ffffff;
+  }
+  #{{ section_id }} .product-card-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 13.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    color: #17102b;
+    line-height: 1.25;
+    margin-bottom: 7px;
+    /* Edge case: very long title clamp to 2 lines cleanly */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 2.5em;
+  }
+  #{{ section_id }} .product-card-title a {
+    color: inherit;
+    text-decoration: none;
+  }
+  #{{ section_id }} .product-card-title a:hover {
+    color: #b8701c;
+  }
+  #{{ section_id }} .rate {
+    font-size: 11.5px;
+    color: rgba(36,26,61,.78);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  #{{ section_id }} .rate b {
+    color: #7a9c1e;
+    font-weight: 700;
+  }
+  #{{ section_id }} .pr {
+    margin-top: auto;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  #{{ section_id }} .pr strong {
+    font-family: 'Outfit', sans-serif;
+    font-size: 18px;
+    color: #17102b;
+    font-weight: 700;
+  }
+  #{{ section_id }} .pr s {
+    font-size: 12px;
+    color: rgba(36,26,61,.56);
+  }
+  #{{ section_id }} .pr em {
+    font-style: normal;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    color: #4f7d10;
+  }
+  #{{ section_id }} .card-form {
+    margin-top: 4px;
+    width: 100%;
+  }
+  #{{ section_id }} .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 38px;
+    padding: 0 18px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    transition: .35s cubic-bezier(.2,.7,.2,1);
+    white-space: nowrap;
+    width: 100%;
+    cursor: pointer;
+  }
+  #{{ section_id }} .btn-ghost {
+    background: rgba(255,255,255,.66);
+    border: 1px solid rgba(75,58,143,.22);
+    color: #01423b;
+  }
+  #{{ section_id }} .btn-ghost:hover:not(:disabled) {
+    background: rgba(255,255,255,.95);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(75,58,143,.12);
+  }
+  #{{ section_id }} .btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  @media (max-width: 760px) {
+    #{{ section_id }} .shot { height: 130px; }
+    #{{ section_id }} .shot img { height: 105px; }
+    #{{ section_id }} .card { padding: 12px; border-radius: 18px; }
+    #{{ section_id }} .product-card-title { font-size: 12px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Shop / Product Grid",
+  "tag": "section",
+  "class": "section-shop",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker text",
+      "default": "Bestsellers"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Loved by 30,000 homes"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Plant-based formulas that replace every harsh chemical in your home."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Source collection"
+    },
+    {
+      "type": "product_list",
+      "id": "product_list",
+      "label": "Featured products (overrides collection)",
+      "limit": 12
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Maximum products to show",
+      "min": 4,
+      "max": 12,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show star rating",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background colour",
+      "default": "transparent"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop / Product Grid"
+    }
+  ]
+}
+{% endschema %}
