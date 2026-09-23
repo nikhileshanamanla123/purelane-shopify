@@ -1,0 +1,90 @@
+<section class="content-section combo-section" id="combos">
+  <div class="page-width">
+    <div class="section-heading section-heading-centered">
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2>{{ section.settings.heading }}</h2>
+      <p>{{ section.settings.body }}</p>
+    </div>
+    <div class="combo-rail" data-horizontal-rail>
+      {% for block in section.blocks %}
+        {% assign combo_product_1 = all_products[block.settings.product_1] %}
+        {% assign combo_product_2 = all_products[block.settings.product_2] %}
+        {% assign combo_product_3 = all_products[block.settings.product_3] %}
+        <article class="combo-card {% if forloop.index == 2 %}combo-card-featured{% endif %}" {{ block.shopify_attributes }}>
+          <div class="combo-visual">
+            <span class="combo-label">{{ block.settings.label }}</span>
+            <div class="combo-products">
+              {% if combo_product_1 != blank %}
+                {% if combo_product_1.featured_image != blank %}
+                  {{ combo_product_1.featured_image | image_url: width: 260 | image_tag: loading: 'lazy', alt: combo_product_1.title }}
+                {% else %}<span class="mini-bottle"></span>{% endif %}
+              {% else %}<span class="mini-bottle"></span>{% endif %}
+              <b>+</b>
+              {% if combo_product_2 != blank %}
+                {% if combo_product_2.featured_image != blank %}
+                  {{ combo_product_2.featured_image | image_url: width: 260 | image_tag: loading: 'lazy', alt: combo_product_2.title }}
+                {% else %}<span class="mini-bottle mini-bottle-two"></span>{% endif %}
+              {% else %}<span class="mini-bottle mini-bottle-two"></span>{% endif %}
+              {% if combo_product_3 != blank %}
+                <b>+</b>
+                {% if combo_product_3.featured_image != blank %}
+                  {{ combo_product_3.featured_image | image_url: width: 260 | image_tag: loading: 'lazy', alt: combo_product_3.title }}
+                {% else %}<span class="mini-bottle mini-bottle-three"></span>{% endif %}
+              {% endif %}
+            </div>
+          </div>
+          <div class="combo-body">
+            <h3>{{ block.settings.title }}</h3>
+            <p>{{ block.settings.description }}</p>
+            <div class="combo-price"><strong>₹{{ block.settings.price }}</strong><s>₹{{ block.settings.compare_at_price }}</s><em>Save ₹{{ block.settings.compare_at_price | minus: block.settings.price }}</em></div>
+            {% if combo_product_1 != blank or combo_product_2 != blank or combo_product_3 != blank %}
+              <button class="button {% if forloop.index == 2 %}button-primary{% else %}button-secondary{% endif %} combo-add" type="button" data-variant1="{{ combo_product_1.selected_or_first_available_variant.id }}" data-variant2="{{ combo_product_2.selected_or_first_available_variant.id }}" data-variant3="{{ combo_product_3.selected_or_first_available_variant.id }}">
+                {{ block.settings.button_label }} {% render 'icon-arrow' %}
+              </button>
+            {% else %}
+              <a class="button button-secondary" href="#bundles">{{ block.settings.button_label }} {% render 'icon-arrow' %}</a>
+            {% endif %}
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+    {% if section.blocks.size > 2 %}<p class="rail-hint">Swipe to see more combos <span>→</span></p>{% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Best-selling combos",
+  "tag": "section",
+  "class": "combos-section",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Pre-built to save you money" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Best-selling combos" },
+    { "type": "textarea", "id": "body", "label": "Body", "default": "Curated boxes priced below buying the same products on their own." }
+  ],
+  "blocks": [
+    {
+      "type": "combo",
+      "name": "Combo",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Most popular" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Kitchen essentials" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Everything for a sparkling kitchen, no need to pick separately." },
+        { "type": "product", "id": "product_1", "label": "Product 1" },
+        { "type": "product", "id": "product_2", "label": "Product 2" },
+        { "type": "product", "id": "product_3", "label": "Product 3 (optional)" },
+        { "type": "text", "id": "price", "label": "Bundle price", "default": "499" },
+        { "type": "text", "id": "compare_at_price", "label": "Compare-at price", "default": "897" },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop bundle" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Best-selling combos",
+      "blocks": [{ "type": "combo" }, { "type": "combo" }, { "type": "combo" }]
+    }
+  ]
+}
+{% endschema %}

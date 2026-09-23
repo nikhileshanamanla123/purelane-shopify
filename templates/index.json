@@ -1,0 +1,178 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "eyebrow": "Plant-powered homecare",
+        "heading_line_1": "Clean that",
+        "heading_line_2": "lasts.",
+        "body": "Tough on grime, gentle on everything else. Plant-powered homecare made for Indian homes.",
+        "button_label": "Shop bestsellers",
+        "button_link": "/collections/frontpage",
+        "secondary_label": "How it works",
+        "secondary_link": "#how-it-works"
+      }
+    },
+    "product-grid": {
+      "type": "product-grid",
+      "settings": {
+        "eyebrow": "Bestsellers",
+        "heading": "Loved by 30,000 homes",
+        "collection": "frontpage",
+        "products_to_show": 8
+      }
+    },
+    "combos": {
+      "type": "combos",
+      "blocks": {
+        "kitchen": {
+          "type": "combo",
+          "settings": {
+            "label": "Most popular",
+            "title": "Kitchen essentials",
+            "description": "Everything for a sparkling kitchen, no need to pick separately.",
+            "product_1": "foaming-kitchen-cleaner",
+            "product_2": "dishwash-gel",
+            "product_3": "tap-cleaner",
+            "price": "499",
+            "compare_at_price": "897",
+            "button_label": "Shop bundle"
+          }
+        },
+        "laundry": {
+          "type": "combo",
+          "settings": {
+            "label": "Save ₹448",
+            "title": "Laundry care bundle",
+            "description": "Softer, fresher wash, all in one box.",
+            "product_1": "laundry-detergent",
+            "product_2": "fabric-conditioner",
+            "product_3": "washing-machine-cleaner",
+            "price": "499",
+            "compare_at_price": "947",
+            "button_label": "Shop bundle"
+          }
+        },
+        "complete-home": {
+          "type": "combo",
+          "settings": {
+            "label": "Best value",
+            "title": "Complete home bundle",
+            "description": "Our biggest saving box for a cleaner home in every room.",
+            "product_1": "foaming-kitchen-cleaner",
+            "product_2": "floor-cleaner",
+            "product_3": "liquid-handwash",
+            "price": "799",
+            "compare_at_price": "1495",
+            "button_label": "Shop bundle"
+          }
+        }
+      },
+      "block_order": [
+        "kitchen",
+        "laundry",
+        "complete-home"
+      ],
+      "settings": {
+        "eyebrow": "Pre-built to save you money",
+        "heading": "Best-selling combos",
+        "body": "Curated boxes priced below buying the same products on their own."
+      }
+    },
+    "bundles": {
+      "type": "bundles",
+      "blocks": {
+        "starter": {
+          "type": "bundle",
+          "settings": {
+            "badge": "Starter",
+            "quantity": "2",
+            "price": "349",
+            "compare_at_price": "598",
+            "description": "Pick any two products.",
+            "button_label": "Build this box"
+          }
+        },
+        "popular": {
+          "type": "bundle",
+          "settings": {
+            "badge": "Most popular",
+            "quantity": "3",
+            "price": "499",
+            "compare_at_price": "897",
+            "description": "Pick any three products for kitchen and laundry.",
+            "button_label": "Build this box"
+          }
+        },
+        "whole-home": {
+          "type": "bundle",
+          "settings": {
+            "badge": "Whole home",
+            "quantity": "5",
+            "price": "799",
+            "compare_at_price": "1495",
+            "description": "Pick any five products for every room.",
+            "button_label": "Build this box"
+          }
+        }
+      },
+      "block_order": [
+        "starter",
+        "popular",
+        "whole-home"
+      ],
+      "settings": {
+        "eyebrow": "Build your bundle",
+        "heading": "One box. Every room.",
+        "body": "Mix and match across kitchen, laundry, home and skin. One flat price, free shipping either way."
+      }
+    },
+    "reviews": {
+      "type": "reviews",
+      "blocks": {
+        "review-1": {
+          "type": "review",
+          "settings": {
+            "quote": "Finally an eco option that cleans as well as the chemical detergent I used for years, and it smells better.",
+            "author": "Anita",
+            "product": "Laundry detergent"
+          }
+        },
+        "review-2": {
+          "type": "review",
+          "settings": {
+            "quote": "Very soft on hands with a lovely fragrance, and it feels good to be using far less plastic.",
+            "author": "Sunita",
+            "product": "Liquid handwash"
+          }
+        },
+        "review-3": {
+          "type": "review",
+          "settings": {
+            "quote": "Hard water had ruined our bathroom fittings. Two sprays and the scale wipes straight off.",
+            "author": "Verified buyer",
+            "product": "Tap cleaner"
+          }
+        }
+      },
+      "block_order": [
+        "review-1",
+        "review-2",
+        "review-3"
+      ],
+      "settings": {
+        "eyebrow": "That’s what they said",
+        "heading": "Real homes. Real results.",
+        "rating": "4.8",
+        "review_count": "8,000+ reviews"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "product-grid",
+    "combos",
+    "bundles",
+    "reviews"
+  ]
+}

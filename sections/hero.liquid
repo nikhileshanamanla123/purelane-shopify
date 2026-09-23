@@ -1,0 +1,69 @@
+<section class="hero" id="top" style="--hero-image: {% if section.settings.image != blank %}url('{{ section.settings.image | image_url: width: 1800 }}'){% else %}none{% endif %};">
+  <div class="hero-glow hero-glow-one"></div>
+  <div class="hero-glow hero-glow-two"></div>
+  <div class="hero-inner page-width">
+    <div class="hero-copy">
+      {% if section.settings.eyebrow != blank %}
+        <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      <h1>{{ section.settings.heading_line_1 }}<br>{{ section.settings.heading_line_2 }} <em>{{ section.settings.heading_accent }}</em></h1>
+      <div class="leaf-rule"><i></i>{% render 'icon-leaf' %}<i></i></div>
+      <p class="hero-body">{{ section.settings.body }}</p>
+      <div class="hero-actions">
+        {% if section.settings.button_label != blank %}
+          <a class="button button-primary" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">{{ section.settings.button_label }} {% render 'icon-arrow' %}</a>
+        {% endif %}
+        {% if section.settings.secondary_label != blank %}
+          <a class="button button-secondary" href="{{ section.settings.secondary_link | default: '#how-it-works' }}">{{ section.settings.secondary_label }}</a>
+        {% endif %}
+      </div>
+      <div class="promise-row" aria-label="Product promises">
+        <span><b>{% render 'icon-leaf' %}</b> Plant powered</span>
+        <span><b>✓</b> Kids &amp; pet safe</span>
+        <span><b>0</b> Harsh chemicals</span>
+      </div>
+    </div>
+    <div class="hero-art" aria-label="Purelane homecare products" role="img">
+      {% if section.settings.image != blank %}
+        {{ section.settings.image | image_url: width: 1200 | image_tag: loading: 'eager', widths: '480,720,960,1200', sizes: '(min-width: 900px) 48vw, 90vw', alt: section.settings.image.alt | default: 'Purelane plant-based homecare products' }}
+      {% else %}
+        <div class="product-orbit">
+          <span class="art-bottle art-bottle-back"></span>
+          <span class="art-bottle art-bottle-front"></span>
+          <span class="art-bottle art-bottle-small"></span>
+          <span class="art-leaf">{% render 'icon-leaf' %}</span>
+        </div>
+      {% endif %}
+      <div class="hero-price">
+        <span>Pick any 3 products</span>
+        <strong>₹499</strong>
+        <small>Free shipping across India</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="trust-strip page-width">
+  <span>100% plant-based</span><i></i><span>Safe around kids &amp; pets</span><i></i><span>Made for Indian homes</span>
+</div>
+
+{% schema %}
+{
+  "name": "Hero",
+  "tag": "section",
+  "class": "hero-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Plant-powered homecare" },
+    { "type": "text", "id": "heading_line_1", "label": "Heading line 1", "default": "Clean that" },
+    { "type": "text", "id": "heading_line_2", "label": "Heading line 2", "default": "lasts." },
+    { "type": "text", "id": "heading_accent", "label": "Heading accent", "default": "naturally" },
+    { "type": "textarea", "id": "body", "label": "Body", "default": "Tough on grime, gentle on everything else. Plant-powered homecare made for Indian homes." },
+    { "type": "image_picker", "id": "image", "label": "Hero image", "info": "Optional. Upload a product lifestyle image to replace the illustrated fallback." },
+    { "type": "text", "id": "button_label", "label": "Primary button label", "default": "Shop bestsellers" },
+    { "type": "url", "id": "button_link", "label": "Primary button link" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary button label", "default": "How it works" },
+    { "type": "text", "id": "secondary_link", "label": "Secondary button link", "default": "#how-it-works" }
+  ],
+  "presets": [{ "name": "Hero" }]
+}
+{% endschema %}

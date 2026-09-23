@@ -1,0 +1,83 @@
+<header class="site-header" data-header>
+  <div class="announcement">
+    <div class="announcement-track">
+      <span>Free shipping <b>on every bundle across India</b></span>
+      <span>100% plant-based <b>and non-toxic</b></span>
+      <span>Loved by <b>30,000+ happy homes</b></span>
+      <span>Buy 3 <b>at flat ₹499</b></span>
+      <span>Free shipping <b>on every bundle across India</b></span>
+      <span>100% plant-based <b>and non-toxic</b></span>
+      <span>Loved by <b>30,000+ happy homes</b></span>
+      <span>Buy 3 <b>at flat ₹499</b></span>
+    </div>
+  </div>
+  <div class="header-shell">
+    <a href="{{ routes.root_url }}" class="brand" aria-label="{{ shop.name }}">
+      {% if section.settings.logo != blank %}
+        {{ section.settings.logo | image_url: width: 260 | image_tag: class: 'brand-logo', alt: shop.name }}
+      {% else %}
+        <span class="brand-mark">{% render 'icon-leaf' %}</span>
+        <span class="brand-copy">
+          <strong>{{ shop.name | default: 'Purelane' }}</strong>
+          <small>{{ settings.brand_tagline | default: 'Clean, simply' }}</small>
+        </span>
+      {% endif %}
+    </a>
+    <nav class="desktop-nav" aria-label="Main navigation">
+      {% if section.settings.menu != blank %}
+        {% for link in section.settings.menu.links %}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {% endfor %}
+      {% else %}
+        <a href="{{ routes.root_url }}">Home</a>
+        <a href="#shop">Shop</a>
+        <a href="#bundles">Bundles</a>
+        <a href="#reviews">Reviews</a>
+      {% endif %}
+    </nav>
+    <div class="header-actions">
+      <a class="header-icon" href="{{ routes.search_url }}" aria-label="Search">{% render 'icon-search' %}</a>
+      {% if shop.customer_accounts_enabled %}
+        <a class="header-icon hide-mobile" href="{{ routes.account_url }}" aria-label="Account">{% render 'icon-user' %}</a>
+      {% endif %}
+      <a class="header-icon cart-link" href="{{ routes.cart_url }}" aria-label="Cart, {{ cart.item_count }} items">
+        {% render 'icon-cart' %}
+        <span class="cart-count" data-cart-count>{{ cart.item_count }}</span>
+      </a>
+      <button class="header-icon menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" data-menu-toggle>
+        <span class="sr-only">Open menu</span>{% render 'icon-menu' %}
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation" data-mobile-menu>
+    {% if section.settings.menu != blank %}
+      {% for link in section.settings.menu.links %}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {% endfor %}
+    {% else %}
+      <a href="{{ routes.root_url }}">Home</a>
+      <a href="#shop">Shop</a>
+      <a href="#bundles">Bundles</a>
+      <a href="#reviews">Reviews</a>
+    {% endif %}
+  </nav>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}

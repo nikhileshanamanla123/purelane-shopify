@@ -1,0 +1,41 @@
+<section class="content-section cart-section">
+  <div class="page-width">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Your order</p>
+        <h1>Cart</h1>
+      </div>
+    </div>
+    {% if cart.item_count > 0 %}
+      <form action="{{ routes.cart_url }}" method="post">
+        <div class="cart-lines">
+          {% for item in cart.items %}
+            <div class="cart-line">
+              <div>
+                <h2><a href="{{ item.url }}">{{ item.product.title }}</a></h2>
+                <p>{{ item.final_price | money }} × {{ item.quantity }}</p>
+              </div>
+              <strong>{{ item.final_line_price | money }}</strong>
+            </div>
+          {% endfor %}
+        </div>
+        <div class="cart-total"><strong>Total</strong><strong>{{ cart.total_price | money }}</strong></div>
+        <button class="button button-primary" type="submit" name="checkout">Checkout</button>
+      </form>
+    {% else %}
+      <div class="empty-state">
+        <h2>Your cart is empty.</h2>
+        <a class="button button-primary" href="{{ routes.all_products_collection_url }}">Shop products</a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cart",
+  "tag": "section",
+  "class": "main-cart-section",
+  "settings": []
+}
+{% endschema %}

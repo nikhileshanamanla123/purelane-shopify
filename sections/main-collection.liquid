@@ -1,0 +1,44 @@
+<section class="content-section collection-section">
+  <div class="page-width">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Shop Purelane</p>
+        <h1>{{ collection.title }}</h1>
+        {% if collection.description != blank %}<div class="collection-description">{{ collection.description }}</div>{% endif %}
+      </div>
+      <span class="collection-count">{{ collection.products_count }} products</span>
+    </div>
+
+    {% paginate collection.products by 24 %}
+      {% if collection.products_count > 0 %}
+        <div class="product-grid">
+          {% for product in collection.products %}
+            {% render 'product-card', product: product, section_id: section.id %}
+          {% endfor %}
+        </div>
+        {% if paginate.pages > 1 %}
+          <nav class="pagination" aria-label="Collection pages">
+            {% if paginate.previous %}<a class="button button-secondary button-small" href="{{ paginate.previous.url }}">Previous</a>{% endif %}
+            <span>Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+            {% if paginate.next %}<a class="button button-secondary button-small" href="{{ paginate.next.url }}">Next</a>{% endif %}
+          </nav>
+        {% endif %}
+      {% else %}
+        <div class="empty-state">
+          <h2>No products in this collection yet.</h2>
+          <p>Add products to this collection in Shopify Admin, then refresh this page.</p>
+          <a class="button button-primary" href="{{ routes.all_products_collection_url }}">View all products</a>
+        </div>
+      {% endif %}
+    {% endpaginate %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection products",
+  "tag": "section",
+  "class": "main-collection-section",
+  "settings": []
+}
+{% endschema %}

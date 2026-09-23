@@ -1,0 +1,50 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Purelane",
+    "theme_version": "1.0.0",
+    "theme_author": "Purelane",
+    "theme_documentation_url": "https://shopify.dev/docs/storefronts/themes"
+  },
+  {
+    "name": "Brand",
+    "settings": [
+      {
+        "type": "text",
+        "id": "brand_tagline",
+        "label": "Brand tagline",
+        "default": "Clean, simply"
+      },
+      {
+        "type": "color",
+        "id": "color_ink",
+        "label": "Ink",
+        "default": "#12213F"
+      },
+      {
+        "type": "color",
+        "id": "color_teal",
+        "label": "Teal",
+        "default": "#00736C"
+      },
+      {
+        "type": "color",
+        "id": "color_lime",
+        "label": "Lime accent",
+        "default": "#75A42C"
+      },
+      {
+        "type": "color",
+        "id": "color_orange",
+        "label": "Warm accent",
+        "default": "#C27A25"
+      },
+      {
+        "type": "color",
+        "id": "color_lilac",
+        "label": "Lilac",
+        "default": "#EDE8F7"
+      }
+    ]
+  }
+]

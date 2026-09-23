@@ -1,0 +1,34 @@
+<article class="product-card">
+  <div class="product-media">
+    {% if product.compare_at_price > product.price %}
+      <span class="product-pill">Best seller</span>
+    {% elsif product.available == false %}
+      <span class="product-pill product-pill-muted">Sold out</span>
+    {% else %}
+      <span class="product-pill">Purelane</span>
+    {% endif %}
+    <a href="{{ product.url }}" class="product-image-link">
+      {% if product.featured_image != blank %}
+        {{ product.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '320,480,700', sizes: '(min-width: 900px) 25vw, 90vw', alt: product.featured_image.alt | default: product.title }}
+      {% else %}
+        <span class="fallback-bottle" role="img" aria-label="{{ product.title }}"></span>
+      {% endif %}
+    </a>
+  </div>
+  <h3><a href="{{ product.url }}">{{ product.title }}</a></h3>
+  <p class="product-meta">
+    {% if product.vendor != blank %}{{ product.vendor }}{% else %}Plant-based formula{% endif %}
+    {% if product.metafields.reviews.rating.value != blank %} · ★ {{ product.metafields.reviews.rating.value }}{% endif %}
+  </p>
+  <div class="product-price">
+    <strong>{{ product.price | money }}</strong>
+    {% if product.compare_at_price > product.price %}<s>{{ product.compare_at_price | money }}</s>{% endif %}
+  </div>
+  {% form 'product', product, class: 'product-form', data-product-form: '' %}
+    <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+    <input type="hidden" name="quantity" value="1">
+    <button type="submit" class="button button-secondary button-small" {% unless product.available %}disabled{% endunless %}>
+      {% if product.available %}Add to cart{% else %}Sold out{% endif %}
+    </button>
+  {% endform %}
+</article>

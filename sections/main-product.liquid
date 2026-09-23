@@ -1,0 +1,42 @@
+<section class="content-section product-detail-section">
+  <div class="page-width product-detail">
+    <div class="product-detail-media">
+      {% if product.featured_image != blank %}
+        {{ product.featured_image | image_url: width: 1000 | image_tag: loading: 'eager', widths: '480,700,1000', sizes: '(min-width: 900px) 50vw, 100vw', alt: product.featured_image.alt | default: product.title }}
+      {% else %}
+        <span class="fallback-bottle" role="img" aria-label="{{ product.title }}"></span>
+      {% endif %}
+    </div>
+    <div class="product-detail-copy">
+      {% if product.vendor != blank %}<p class="eyebrow">{{ product.vendor }}</p>{% endif %}
+      <h1>{{ product.title }}</h1>
+      <div class="product-price product-detail-price">
+        <strong>{{ product.price | money }}</strong>
+        {% if product.compare_at_price > product.price %}<s>{{ product.compare_at_price | money }}</s>{% endif %}
+      </div>
+      {% if product.description != blank %}<div class="product-description">{{ product.description }}</div>{% endif %}
+      {% form 'product', product, class: 'product-form product-detail-form', data-product-form: '' %}
+        <label for="ProductVariant-{{ section.id }}">Variant</label>
+        <select id="ProductVariant-{{ section.id }}" name="id">
+          {% for variant in product.variants %}
+            <option value="{{ variant.id }}" {% if variant == product.selected_or_first_available_variant %}selected{% endif %} {% unless variant.available %}disabled{% endunless %}>
+              {{ variant.title }} — {{ variant.price | money }}{% unless variant.available %} — Sold out{% endunless %}
+            </option>
+          {% endfor %}
+        </select>
+        <button type="submit" class="button button-primary" {% unless product.available %}disabled{% endunless %}>
+          {% if product.available %}Add to cart{% else %}Sold out{% endif %}
+        </button>
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product details",
+  "tag": "section",
+  "class": "main-product-section",
+  "settings": []
+}
+{% endschema %}
